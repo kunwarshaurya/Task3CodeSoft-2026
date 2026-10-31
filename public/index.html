@@ -1,0 +1,160 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="theme-color" content="#f7f7f4" />
+    <title>Daylist — a calmer to-do list</title>
+    <link rel="stylesheet" href="/styles.css" />
+    <script src="/app.js" defer></script>
+  </head>
+  <body>
+    <div class="app-frame">
+      <header class="topbar">
+        <a class="brand" href="/" aria-label="Daylist home">
+          <span class="brand-mark" aria-hidden="true"><span></span><span></span><span></span></span>
+          <span>daylist</span>
+        </a>
+        <div id="user-controls" class="user-controls" hidden>
+          <span class="user-avatar" id="avatar">D</span>
+          <span class="user-name" id="user-name"></span>
+          <button class="icon-button" id="logout-button" type="button" aria-label="Sign out" title="Sign out">
+            <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M10 17l5-5-5-5M15 12H3m9-8h6a2 2 0 0 1 2 2v12a2 2 0 0 1-2 2h-6" /></svg>
+          </button>
+        </div>
+      </header>
+
+      <main>
+        <section id="auth-view" class="auth-view">
+          <div class="auth-intro">
+            <span class="eyebrow"><span class="eyebrow-dot"></span> YOUR DAY, IN ORDER</span>
+            <h1>Make room for<br /><em>what matters.</em></h1>
+            <p>A quieter place to keep track of the things you want to get done.</p>
+            <div class="auth-decoration" aria-hidden="true">
+              <span class="decor-sun"></span>
+              <span class="decor-line line-one"></span>
+              <span class="decor-line line-two"></span>
+              <span class="decor-line line-three"></span>
+              <span class="decor-leaf leaf-one"></span>
+              <span class="decor-leaf leaf-two"></span>
+            </div>
+          </div>
+          <div class="auth-card">
+            <div class="auth-tabs" role="tablist" aria-label="Account access">
+              <button class="auth-tab active" id="login-tab" type="button" role="tab" aria-selected="true">Sign in</button>
+              <button class="auth-tab" id="register-tab" type="button" role="tab" aria-selected="false">Create account</button>
+            </div>
+            <div class="auth-heading">
+              <h2 id="auth-title">Welcome back</h2>
+              <p id="auth-subtitle">Pick up where you left off.</p>
+            </div>
+            <form id="auth-form">
+              <label id="name-field" class="field" hidden>
+                <span>Your name</span>
+                <input id="auth-name" name="name" type="text" autocomplete="name" minlength="2" maxlength="100" placeholder="Alex Morgan" />
+              </label>
+              <label class="field">
+                <span>Email address</span>
+                <input id="auth-email" name="email" type="email" autocomplete="email" required placeholder="you@example.com" />
+              </label>
+              <label class="field">
+                <span>Password</span>
+                <input id="auth-password" name="password" type="password" autocomplete="current-password" minlength="6" required placeholder="At least 6 characters" />
+              </label>
+              <p id="auth-message" class="form-message" role="status" aria-live="polite"></p>
+              <button id="auth-submit" class="button button-primary button-wide" type="submit">Sign in <span aria-hidden="true">→</span></button>
+            </form>
+            <p class="auth-footnote">Your tasks stay private to your account.</p>
+          </div>
+        </section>
+
+        <section id="dashboard" class="dashboard" hidden>
+          <div class="welcome-row">
+            <div>
+              <span class="eyebrow"><span class="eyebrow-dot"></span> YOUR PERSONAL SPACE</span>
+              <h1 id="welcome-title">A little progress adds up.</h1>
+              <p id="today-label" class="today-label"></p>
+            </div>
+            <div class="day-note"><span class="day-note-spark">✳</span><span>One thing at a time<br /><strong>You’ve got this.</strong></span></div>
+          </div>
+
+          <section class="summary-grid" aria-label="Task summary">
+            <article class="summary-card summary-total"><span class="summary-label">All tasks</span><strong id="total-count">0</strong><span class="summary-hint">on your list</span><span class="summary-icon">✳</span></article>
+            <article class="summary-card summary-progress"><span class="summary-label">In progress</span><strong id="progress-count">0</strong><span class="summary-hint">being worked on</span><span class="summary-icon">↗</span></article>
+            <article class="summary-card summary-done"><span class="summary-label">Completed</span><strong id="done-count">0</strong><span class="summary-hint">nice work</span><span class="summary-icon">✓</span></article>
+          </section>
+
+          <section class="workspace-grid">
+            <aside class="composer-panel">
+              <div class="section-heading">
+                <div><span class="section-kicker">GET IT OUT OF YOUR HEAD</span><h2 id="task-form-title">Add a task</h2></div>
+                <span class="plus-mark" aria-hidden="true">+</span>
+              </div>
+              <form id="task-form" class="task-form">
+                <label class="field">
+                  <span>What needs doing?</span>
+                  <input id="task-title" name="title" type="text" maxlength="200" required placeholder="e.g. Send the project proposal" />
+                </label>
+                <label class="field">
+                  <span>A few details <small>optional</small></span>
+                  <textarea id="task-description" name="description" rows="3" maxlength="2000" placeholder="Add a note to help you get started..."></textarea>
+                </label>
+                <div class="field-row">
+                  <label class="field">
+                    <span>Category</span>
+                    <input id="task-category" name="category" type="text" maxlength="50" placeholder="General" />
+                  </label>
+                  <label class="field">
+                    <span>Priority</span>
+                    <select id="task-priority" name="priority">
+                      <option value="low">Low</option><option value="medium" selected>Medium</option><option value="high">High</option>
+                    </select>
+                  </label>
+                </div>
+                <label class="field">
+                  <span>Due date <small>optional</small></span>
+                  <input id="task-due-date" name="dueDate" type="date" />
+                </label>
+                <div class="form-actions">
+                  <button id="cancel-edit" class="button button-quiet" type="button" hidden>Cancel</button>
+                  <button id="task-submit" class="button button-primary button-wide" type="submit">Add to my list <span aria-hidden="true">↗</span></button>
+                </div>
+              </form>
+            </aside>
+
+            <section class="list-panel" aria-label="Your tasks">
+              <div class="list-topline">
+                <div><span class="section-kicker">THE PLAN</span><h2>Your tasks <span id="visible-count" class="count-chip">0</span></h2></div>
+                <label class="sort-control"><span class="visually-hidden">Sort tasks</span><select id="sort-select"><option value="createdAt:desc">Recently added</option><option value="dueDate:asc">Due date</option><option value="title:asc">Title A–Z</option></select></label>
+              </div>
+              <div class="task-tools">
+                <label class="search-box">
+                  <svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="10.8" cy="10.8" r="6.8"/><path d="m16 16 4.5 4.5"/></svg>
+                  <input id="search-input" type="search" placeholder="Find a task..." aria-label="Search tasks" />
+                  <kbd>⌘ K</kbd>
+                </label>
+                <label class="filter-select"><span class="visually-hidden">Filter by priority</span><select id="priority-filter"><option value="">All priorities</option><option value="high">High priority</option><option value="medium">Medium priority</option><option value="low">Low priority</option></select></label>
+              </div>
+              <div class="status-tabs" role="tablist" aria-label="Filter tasks by status">
+                <button class="status-tab active" type="button" data-status="" aria-selected="true">All <span id="tab-all-count">0</span></button>
+                <button class="status-tab" type="button" data-status="pending" aria-selected="false">To do</button>
+                <button class="status-tab" type="button" data-status="in-progress" aria-selected="false">In progress</button>
+                <button class="status-tab" type="button" data-status="completed" aria-selected="false">Done</button>
+              </div>
+              <div id="loading-state" class="loading-state" hidden><span class="spinner"></span>Gathering your tasks...</div>
+              <div id="task-list" class="task-list"></div>
+              <div id="empty-state" class="empty-state" hidden>
+                <span class="empty-illustration" aria-hidden="true">☼</span>
+                <h3 id="empty-title">A fresh page.</h3>
+                <p id="empty-description">Add your first task and make today count.</p>
+                <button id="empty-action" class="text-button" type="button">Create a task <span aria-hidden="true">↑</span></button>
+              </div>
+              <p id="list-message" class="list-message" role="status" aria-live="polite"></p>
+            </section>
+          </section>
+        </section>
+      </main>
+      <footer class="footer"><span>daylist</span><span>A calmer way to get things done.</span></footer>
+    </div>
+  </body>
+</html>
